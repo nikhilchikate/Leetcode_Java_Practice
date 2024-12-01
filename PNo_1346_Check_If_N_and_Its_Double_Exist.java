@@ -26,14 +26,22 @@ Constraints:
 
 class Solution {
     public boolean checkIfExist(int[] arr) {
-        Set<Integer> wasSeen = new HashSet<>();
-
-        for (final int a : arr) {
-            if (wasSeen.contains(a * 2) || a % 2 == 0 && wasSeen.contains(a / 2)) {
+        for (int i = 0; i < arr.length; i++) {
+            float half = (float) arr[i] / 2;
+            int index = findIndex(arr, half);
+            if (index != i && index != -1) {
                 return true;
             }
-            wasSeen.add(a);
         }
         return false;
+    }
+
+    static int findIndex(int[] nums, float target) {
+        for (int i = 0; i < nums.length; i++) {
+            if ((float) nums[i] == target) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
