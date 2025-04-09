@@ -53,16 +53,23 @@ Constraints:
 */
 
 class Solution {
-    public int minOperations(int[] nums, int k) {
-        Set<Integer> numsSet = Arrays.stream(nums).boxed().collect(Collectors.toSet());
-        final int mn = Arrays.stream(nums).min().getAsInt();
+    public int minOperations(int[] arr, int limit) {
+        boolean[] present = new boolean[101];
 
-        if (mn < k)
-            return -1;
+        for (int num : arr) {
+            present[num] = true;
+        }
+        int ops = 0;
+        for (int i = 0; i < present.length; i++) {
+            if (!present[i])
+                continue;
 
-        if (mn > k)
-            return numsSet.size();
+            if (present[i] && i < limit)
+                return -1;
+            else if (present[i] && i > limit)
+                ops++;
+        }
 
-        return numsSet.size() - 1;
+        return ops;
     }
 }
