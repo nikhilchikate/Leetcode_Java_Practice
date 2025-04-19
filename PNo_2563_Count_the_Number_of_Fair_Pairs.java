@@ -29,33 +29,27 @@ nums.length == n
 
 class Solution {
     public long countFairPairs(int[] nums, int lower, int upper) {
-        // Edge case: No pairs possible if array has fewer than 2 elements
         if (nums == null || nums.length < 2)
             return 0;
 
-        // Sort the array to use two-pointer technique
         Arrays.sort(nums);
 
-        // Count pairs with sum <= upper and sum <= lower - 1
         long upperCount = countPairs(nums, upper);
         long lowerCount = countPairs(nums, lower - 1);
 
-        // Return the difference to get pairs in range [lower, upper]
         return upperCount - lowerCount;
     }
 
-    // Count pairs where sum of nums[left] + nums[right] <= target
     private long countPairs(int[] nums, int target) {
         int left = 0, right = nums.length - 1;
         long count = 0;
 
         while (left < right) {
             if (nums[left] + nums[right] <= target) {
-                // All pairs (left, left+1, ..., right-1) are valid
                 count += (right - left);
-                left++; // Move left pointer to the right
+                left++;
             } else {
-                right--; // Move right pointer to the left
+                right--;
             }
         }
 
