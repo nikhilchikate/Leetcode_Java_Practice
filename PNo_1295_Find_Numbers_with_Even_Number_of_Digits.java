@@ -29,19 +29,13 @@ Constraints:
 */
 
 class Solution {
-    public int findNumbers(int[] nums) {
+    public int findNumbers(int[] array) {
         int count = 0;
-        int ans = 0;
-        for (int i = 0; i < nums.length; i++) {
-            int num = nums[i];
-            while (num > 0) {
-                num = num / 10;
+        for (int element : array) {
+            if ((element > 9 && element < 100) || (element > 999 && element < 10000) || (element == 100000)) {
                 count++;
             }
-            if (count % 2 == 0)
-                ans++;
-            count = 0;
         }
-        return ans;
+        return count;
     }
 }
