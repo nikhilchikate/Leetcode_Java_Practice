@@ -33,19 +33,13 @@ nums.length == 3
 
 class Solution {
     public String triangleType(int[] nums) {
-        if (nums[0] == nums[1] && nums[1] == nums[2]) {
+        int a = nums[0], b = nums[1], c = nums[2];
+        if (a + b <= c || a + c <= b || b + c <= a)
+            return "none";
+        if (a == b && b == c)
             return "equilateral";
-        } else {
-            int maxSide = Math.max(nums[0], Math.max(nums[1], nums[2]));
-            int sum = nums[0] + nums[1] + nums[2];
-
-            if (maxSide >= sum - maxSide) {
-                return "none";
-            } else if (nums[0] != nums[1] && nums[1] != nums[2] && nums[0] != nums[2]) {
-                return "scalene";
-            } else {
-                return "isosceles";
-            }
-        }
+        if (a == b || b == c || a == c)
+            return "isosceles";
+        return "scalene";
     }
 }
