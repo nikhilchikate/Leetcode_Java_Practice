@@ -36,24 +36,24 @@ s consists only of lowercase English letters.
 */
 
 class Solution {
-    public String makeFancyString(String s) {
-        int cnt = 0; // Count of consecutive characters
-        StringBuilder res = new StringBuilder(); // Resulting string
-        char lastChar = s.charAt(0); // Previous character
+    public String makeFancyString(String src) {
+        char[] chars = src.toCharArray();
+        char lastCh = chars[0];
+        int lastChCnt = 1;
+        int writeIdx = 1;
 
-        for (char currChar : s.toCharArray()) { // Iterate through each character
-            if (currChar == lastChar) {
-                cnt++; // Increment count if the same as last
-            } else {
-                cnt = 1; // Reset count for new character
+        for (int i = 1; i < chars.length; i++) {
+            if (chars[i] != lastCh) {
+                lastCh = chars[i];
+                lastChCnt = 0;
             }
 
-            // Append character if it appears less than 3 times consecutively
-            if (cnt < 3)
-                res.append(currChar);
-            lastChar = currChar; // Update last character
+            if (++lastChCnt > 2)
+                continue;
+
+            chars[writeIdx++] = chars[i];
         }
 
-        return res.toString(); // Return the final fancy string
+        return new String(chars, 0, writeIdx);
     }
 }
