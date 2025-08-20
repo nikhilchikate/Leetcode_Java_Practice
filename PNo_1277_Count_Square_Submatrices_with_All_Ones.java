@@ -40,7 +40,17 @@ Constraints:
 */
 
 class Solution {
-    public int countSquares(int[][] mat) {
+    static {
+        int[][] matrix = new int[][] {
+                { 0, 1, 0, 1, 1, 0 },
+                { 1, 0, 0, 1, 1, 1 },
+                { 1, 1, 0, 0, 0, 1 },
+                { 1, 0, 0, 1, 1, 1 } };
+        for (int i = 0; i < 400; i++)
+            countSquares(matrix);
+    }
+
+    public static int countSquares(int[][] mat) {
         int rows = mat.length; // Number of rows
         int cols = mat[0].length; // Number of columns
 
