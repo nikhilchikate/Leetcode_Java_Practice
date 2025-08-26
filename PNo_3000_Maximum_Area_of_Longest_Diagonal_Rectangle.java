@@ -31,22 +31,20 @@ dimensions[i].length == 2
 
 class Solution {
     public int areaOfMaxDiagonal(int[][] dims) {
-        int res = 0;
-        int maxDiag = 0;
-
+        int maxD = 0;
+        int maxA = 0;
         for (int[] d : dims) {
             int l = d[0];
             int w = d[1];
             int diag = l * l + w * w;
-
-            if (diag > maxDiag) {
-                maxDiag = diag;
-                res = l * w;
-            } else if (diag == maxDiag) {
-                res = Math.max(res, l * w);
+            int area = l * w;
+            if (diag > maxD) {
+                maxD = diag;
+                maxA = area;
+            } else if (diag == maxD) {
+                maxA = Math.max(maxA, area);
             }
         }
-
-        return res;
+        return maxA;
     }
 }
