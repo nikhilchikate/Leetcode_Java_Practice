@@ -29,57 +29,40 @@ classes[i].length == 2
 */
 
 class Solution {
-    class CourseRecord {
-        int passed;
-        int total;
-        double increment;
-
-        public CourseRecord(int[] info) {
-            passed = info[0];
-            total = info[1];
-            increment = calculateIncrement();
-        }
-
-        public CourseRecord addStudent() {
-            passed++;
-            total++;
-            increment = calculateIncrement();
-            return this;
-        }
-
-        private double calculateIncrement() {
-            return (passed + 1.0) / (total + 1) - (double) passed / total;
-        }
-    }
-
-    public double maxAverageRatio(int[][] data, int additionalStudents) {
-        PriorityQueue<CourseRecord> priorityQueue = new PriorityQueue<>(new RecordComparator());
-        for (int[] course : data) {
-            priorityQueue.add(new CourseRecord(course));
-        }
-
-        CourseRecord course;
-        while (additionalStudents-- > 0) {
-            priorityQueue.add(priorityQueue.remove().addStudent());
-        }
-
-        double totalPassRate = 0;
-        while (!priorityQueue.isEmpty()) {
-            course = priorityQueue.remove();
-            totalPassRate += (double) course.passed / course.total;
-        }
-        return totalPassRate / data.length;
-    }
-
-    class RecordComparator implements Comparator<CourseRecord> {
-        public int compare(CourseRecord recordA, CourseRecord recordB) {
-            if (recordA.increment < recordB.increment) {
-                return 1;
-            } else if (recordA.increment > recordB.increment) {
-                return -1;
-            } else {
+    public double maxAverageRatio(int[][] cls, int ext) {
+        PriorityQueue<double[]> pq = new PriorityQueue<>(new Comparator<double[]>() {
+            public int compare(double[] a, double[] b) {
+                if (a[0] < b[0])
+                    return 1;
+                if (a[0] > b[0])
+                    return -1;
                 return 0;
             }
+        });
+
+        for (int i = 0; i < cls.length; i++) {
+            double p = cls[i][0];
+            double t = cls[i][1];
+            double inc = (p + 1.0) / (t + 1.0) - p / t;
+            pq.offer(new double[] { inc, p, t });
         }
+
+        while (ext > 0) {
+            double[] top = pq.poll();
+            double p = top[1] + 1;
+            double t = top[2] + 1;
+            double inc = (p + 1.0) / (t + 1.0) - p / t;
+            pq.offer(new double[] { inc, p, t });
+            ext--;
+        }
+
+        double s = 0.0;
+        Object[] a = pq.toArray();
+        for (int i = 0; i < a.length; i++) {
+            double[] c = (double[]) a[i];
+            s += c[1] / c[2];
+        }
+
+        return s / cls.length;
     }
 }
