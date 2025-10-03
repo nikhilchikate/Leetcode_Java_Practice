@@ -27,58 +27,53 @@ n == heightMap[i].length
 */
 
 class Solution {
-    public int trapRainWater(int[][] heightMap) {
-        int cols = heightMap[0].length;
-        int rows = heightMap.length;
+    public int trapRainWater(int[][] h) {
+        int n = h[0].length;
+        int m = h.length;
 
-        // initialization
-        int[][] waterLevels = new int[rows][cols];
-        for (int row = 0; row < rows; ++row) {
-            for (int col = 0; col < cols; ++col) {
-                waterLevels[row][col] = heightMap[row][col];
+        int[][] w = new int[m][n];
+        for (int r = 0; r < m; ++r) {
+            for (int c = 0; c < n; ++c) {
+                w[r][c] = h[r][c];
             }
         }
 
-        // spread water levels
-        boolean isFirstPass = true;
-        boolean isUpdated = true;
-        while (isUpdated) {
-            isUpdated = false;
+        boolean init = true;
+        boolean upd = true;
+        while (upd) {
+            upd = false;
 
-            // propagate from top-left
-            for (int row = 1; row < rows - 1; ++row) {
-                for (int col = 1; col < cols - 1; ++col) {
-                    int minNeighborHeight = Math.min(waterLevels[row - 1][col], waterLevels[row][col - 1]);
-                    int newWaterLevel = Math.max(heightMap[row][col], minNeighborHeight);
-                    if (isFirstPass || waterLevels[row][col] > newWaterLevel) {
-                        waterLevels[row][col] = newWaterLevel;
-                        isUpdated = true;
+            for (int r = 1; r < m - 1; ++r) {
+                for (int c = 1; c < n - 1; ++c) {
+                    int minH = Math.min(w[r - 1][c], w[r][c - 1]);
+                    int newW = Math.max(h[r][c], minH);
+                    if (init || w[r][c] > newW) {
+                        w[r][c] = newW;
+                        upd = true;
                     }
                 }
             }
-            isFirstPass = false;
+            init = false;
 
-            // propagate from bottom-right
-            for (int row = rows - 2; row >= 1; --row) {
-                for (int col = cols - 2; col >= 1; --col) {
-                    int minNeighborHeight = Math.min(waterLevels[row + 1][col], waterLevels[row][col + 1]);
-                    int newWaterLevel = Math.max(heightMap[row][col], minNeighborHeight);
-                    if (waterLevels[row][col] > newWaterLevel) {
-                        waterLevels[row][col] = newWaterLevel;
-                        isUpdated = true;
+            for (int r = m - 2; r >= 1; --r) {
+                for (int c = n - 2; c >= 1; --c) {
+                    int minH = Math.min(w[r + 1][c], w[r][c + 1]);
+                    int newW = Math.max(h[r][c], minH);
+                    if (w[r][c] > newW) {
+                        w[r][c] = newW;
+                        upd = true;
                     }
                 }
             }
         }
 
-        // calculate the trapped water
-        int totalWater = 0;
-        for (int row = 1; row < rows - 1; ++row) {
-            for (int col = 1; col < cols - 1; ++col) {
-                if (waterLevels[row][col] > heightMap[row][col])
-                    totalWater += waterLevels[row][col] - heightMap[row][col];
+        int res = 0;
+        for (int r = 1; r < m - 1; ++r) {
+            for (int c = 1; c < n - 1; ++c) {
+                if (w[r][c] > h[r][c])
+                    res += w[r][c] - h[r][c];
             }
         }
-        return totalWater;
+        return res;
     }
 }
