@@ -38,59 +38,74 @@ All the positions in guards and walls are unique.
 class Solution {
     public int countUnguarded(int m, int n, int[][] guards, int[][] walls) {
         int[][] grid = new int[m][n];
-        int r, c;
+        int guardedCnt = 0;
+        int guardLen = guards.length;
+        int wallLen = walls.length;
 
-        // Mark guards and walls on the grid
-        for (int[] g : guards) {
-            grid[g[0]][g[1]] = 1;
-        }
         for (int[] w : walls) {
-            grid[w[0]][w[1]] = 1;
+            grid[w[0]][w[1]] = 2;
         }
-
-        int unguardedCount = 0;
-
-        // Check each guard's line of sight
         for (int[] g : guards) {
-            r = g[0] - 1; // check upwards
-            c = g[1];
-            while (r >= 0 && grid[r][c] != 1) {
-                if (grid[r][c] != -1) {
-                    unguardedCount++;
-                    grid[r][c] = -1; // mark as guarded
-                }
-                r--;
-            }
+            grid[g[0]][g[1]] = 2;
+        }
 
-            r = g[0] + 1; // check downwards
-            while (r < m && grid[r][c] != 1) {
-                if (grid[r][c] != -1) {
-                    unguardedCount++;
-                    grid[r][c] = -1; // mark as guarded
-                }
-                r++;
-            }
+        int[][] dirs = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
 
-            r = g[0]; // check leftwards
-            c = g[1] - 1;
-            while (c >= 0 && grid[r][c] != 1) {
-                if (grid[r][c] != -1) {
-                    unguardedCount++;
-                    grid[r][c] = -1; // mark as guarded
-                }
-                c--;
-            }
+        for (int row = 0; row < guardLen; row++) {
+            int gRow = guards[row][0];
+            int gCol = guards[row][1];
 
-            c = g[1] + 1; // check rightwards
-            while (c < n && grid[r][c] != 1) {
-                if (grid[r][c] != -1) {
-                    unguardedCount++;
-                    grid[r][c] = -1; // mark as guarded
+            for (int i = gRow + 1; i < m; i++) {
+                int nR = i;
+                int nC = gCol;
+                if (grid[nR][nC] == 2) {
+                    break;
                 }
-                c++;
+                if (grid[nR][nC] == 1) {
+                    continue;
+                }
+                grid[nR][nC] = 1;
+                guardedCnt++;
+            }
+            for (int i = gCol + 1; i < n; i++) {
+                int nR = gRow;
+                int nC = i;
+                if (grid[nR][nC] == 2) {
+                    break;
+                }
+                if (grid[nR][nC] == 1) {
+                    continue;
+                }
+                grid[nR][nC] = 1;
+                guardedCnt++;
+            }
+            for (int i = gCol - 1; i >= 0; i--) {
+                int nR = gRow;
+                int nC = i;
+                if (grid[nR][nC] == 2) {
+                    break;
+                }
+                if (grid[nR][nC] == 1) {
+                    continue;
+                }
+                grid[nR][nC] = 1;
+                guardedCnt++;
+            }
+            for (int i = gRow - 1; i >= 0; i--) {
+                int nR = i;
+                int nC = gCol;
+                if (grid[nR][nC] == 2) {
+                    break;
+                }
+                if (grid[nR][nC] == 1) {
+                    continue;
+                }
+                grid[nR][nC] = 1;
+                guardedCnt++;
             }
         }
 
-        return m * n - guards.length - walls.length - unguardedCount;
+        int totalUnguarded = (m * n) - (guardLen + wallLen + guardedCnt);
+        return totalUnguarded;
     }
 }
