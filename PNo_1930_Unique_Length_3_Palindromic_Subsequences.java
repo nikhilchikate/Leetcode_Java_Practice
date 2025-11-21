@@ -51,13 +51,13 @@ class Solution {
         final int[] freq = new int[26];
         int total = 0;
 
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < len; ++i) {
             final int ch = arr[i] - 'a';
             freq[ch]++;
             if (first[ch] == 0) {
                 first[ch] = i + 1;
                 final int[] chCnts = cnts[ch];
-                for (int j = 0; j < 26; j++)
+                for (int j = 0; j < 26; ++j)
                     chCnts[j] = freq[j];
                 total++;
             }
@@ -65,14 +65,14 @@ class Solution {
 
         int result = 0;
         final boolean[] lastSeen = new boolean[26];
-        for (int i = len - 1; i >= 2; i--) {
+        for (int i = len - 1; i >= 2; --i) {
             final int ch = arr[i] - 'a';
             freq[ch]--;
             if (!lastSeen[ch]) {
                 lastSeen[ch] = true;
                 if (i > first[ch]) {
                     final int[] chCnts = cnts[ch];
-                    for (int j = 0; j < 26; j++)
+                    for (int j = 0; j < 26; ++j)
                         if (freq[j] > chCnts[j])
                             result++;
                 }
