@@ -47,57 +47,50 @@ class Solution {
 
     public int maxKDivisibleComponents(
             int n,
-            int[][] e,
-            int[] v,
+            int[][] edges,
+            int[] vals,
             int k) {
-        // Build adjacency list
-        List<Integer>[] a = new ArrayList[n];
+
+        List<Integer>[] adj = new ArrayList[n];
         for (int i = 0; i < n; i++) {
-            a[i] = new ArrayList<>();
+            adj[i] = new ArrayList<>();
         }
-        for (int[] edge : e) {
-            int u = edge[0];
-            int w = edge[1];
-            a[u].add(w);
-            a[w].add(u);
+        for (int[] ed : edges) {
+            int x = ed[0];
+            int y = ed[1];
+            adj[x].add(y);
+            adj[y].add(x);
         }
 
-        // Initialize component count
-        int[] c = new int[1];
-
-        // Start DFS from node 0
-        dfs(0, -1, a, v, k, c);
-
-        // Return the number of valid components
-        return c[0];
+        int[] cnt = new int[1];
+        search(0, -1, adj, vals, k, cnt);
+        return cnt[0];
     }
 
-    private int dfs(
-            int cur,
-            int p,
-            List<Integer>[] a,
-            int[] v,
+    private int search(
+            int node,
+            int parent,
+            List<Integer>[] adj,
+            int[] vals,
             int k,
-            int[] c) {
-        int sum = 0;
+            int[] cnt) {
 
-        // Explore each neighbor
-        for (int nbr : a[cur]) {
-            if (nbr != p) {
-                sum += dfs(nbr, cur, a, v, k, c);
-                sum %= k;
+        int acc = 0;
+
+        for (int nxt : adj[node]) {
+            if (nxt != parent) {
+                acc += search(nxt, node, adj, vals, k, cnt);
+                acc %= k;
             }
         }
 
-        // Add current node value to the sum
-        sum += v[cur];
-        sum %= k;
+        acc += vals[node];
+        acc %= k;
 
-        // Check if the sum is divisible by k
-        if (sum == 0) {
-            c[0]++;
+        if (acc == 0) {
+            cnt[0]++;
         }
 
-        return sum;
+        return acc;
     }
 }
