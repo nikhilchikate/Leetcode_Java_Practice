@@ -37,17 +37,22 @@ events[i].length == 3
 
 class Solution {
     public int maxTwoEvents(int[][] events) {
-        long[] s = new long[events.length];
-        long[] e = new long[events.length];
-        for (int i = 0; i < events.length; i++) {
+        int len = events.length;
+        long[] s = new long[len];
+        long[] e = new long[len];
+
+        for (int i = 0; i < len; ++i) {
             s[i] = ((long) events[i][0] << 32) | (0xFFFF_FFFFL & i);
             e[i] = ((long) (events[i][1] + 1) << 32) | (0xFFFF_FFFFL & i);
         }
+
         Arrays.sort(s);
         Arrays.sort(e);
+
         int last = 0;
         int sum = 0;
-        for (int i = 0, j = 0; i < events.length && j < events.length;) {
+
+        for (int i = 0, j = 0; i < len && j < len;) {
             int st = (int) ((s[i] >> 32) & 0xFFFF_FFFFL);
             int si = (int) (s[i] & 0xFFFF_FFFFL);
             int et = (int) ((e[j] >> 32) & 0xFFFF_FFFFL);
@@ -60,6 +65,7 @@ class Solution {
                 ++j;
             }
         }
+
         return sum;
     }
 }
