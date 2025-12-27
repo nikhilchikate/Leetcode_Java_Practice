@@ -13,7 +13,6 @@ Return the number of the room that held the most meetings. If there are multiple
 A half-closed interval [a, b) is the interval between a and b including a and not including b.
 
 
-
 Example 1:
 
 Input: n = 2, meetings = [[0,10],[1,5],[2,7],[3,4]]
