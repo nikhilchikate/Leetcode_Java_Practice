@@ -33,29 +33,27 @@ n == matrix.length == matrix[i].length
 */
 
 class Solution {
-    public long maxMatrixSum(int[][] mat) {
-        long sum = 0;
-        int r = mat.length;
-        int c = mat[0].length;
-        int min = Integer.MAX_VALUE;
-        boolean neg = false;
+    public long maxMatrixSum(int[][] grid) {
+        int size = grid.length;
 
-        for (int i = 0; i < r; i++) {
-            for (int j = 0; j < c; j++) {
-                int v = mat[i][j];
-                if (v < 0) {
-                    neg = !neg;
-                    v = -v;
+        int minValue = 100001;
+        long total = 0L;
+        int negCount = 0;
+
+        for (int[] row : grid) {
+            for (int num : row) {
+                if (num < 0) {
+                    negCount++;
+                    num = -num;
                 }
-                sum += v;
-                if (v < min) {
-                    min = v;
+
+                total += num;
+                if (num < minValue) {
+                    minValue = num;
                 }
             }
         }
 
-        if (neg)
-            return sum - 2 * min;
-        return sum;
+        return (negCount % 2 == 0) ? total : (total - 2L * minValue);
     }
 }
