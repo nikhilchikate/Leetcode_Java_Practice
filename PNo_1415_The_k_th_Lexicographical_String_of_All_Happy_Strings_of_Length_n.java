@@ -34,6 +34,7 @@ Constraints:
 1 <= k <= 100
 */
 
+
 class Solution {
     public String getHappyString(int n, int k) {
         if (3 * (1 << (n - 1)) < k) {
