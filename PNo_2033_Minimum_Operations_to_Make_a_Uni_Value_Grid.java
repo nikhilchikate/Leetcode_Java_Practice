@@ -40,6 +40,7 @@ n == grid[i].length
 1 <= x, grid[i][j] <= 104
 */
 
+
 class Solution {
     public int minOperations(int[][] grid, int x) {
         int rows = grid.length, cols = grid[0].length;
