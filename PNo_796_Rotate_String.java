@@ -22,6 +22,7 @@ Constraints:
 s and goal consist of lowercase English letters.
 */
 
+
 class Solution {
     public boolean rotateString(String s, String goal) {
         if (s.length() != goal.length())
