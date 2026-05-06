@@ -54,16 +54,16 @@ box[i][j] is either '#', '*', or '.'.
 */
 
 class Solution {
-    public char[][] rotateTheBox(char[][] box) {
-        int rows = box.length, cols = box[0].length;
+    public char[][] rotateTheBox(char[][] boxGrid) {
+        int rows = boxGrid.length, cols = boxGrid[0].length;
         char[][] result = new char[cols][rows];
 
         for (int i = 0; i < rows; ++i) {
             for (int j = cols - 1, emptyRow = cols - 1; j >= 0; --j) {
                 result[j][rows - i - 1] = '.';
-                if (box[i][j] != '.') {
-                    emptyRow = box[i][j] == '*' ? j : emptyRow;
-                    result[emptyRow--][rows - i - 1] = box[i][j];
+                if (boxGrid[i][j] != '.') {
+                    emptyRow = boxGrid[i][j] == '*' ? j : emptyRow;
+                    result[emptyRow--][rows - i - 1] = boxGrid[i][j];
                 }
             }
         }
