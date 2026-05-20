@@ -34,18 +34,22 @@ It is guaranteed that A and B are both a permutation of n integers.
 */
 
 class Solution {
-    public int[] findThePrefixCommonArray(int[] a, int[] b) {
-        int n = a.length;
-        int[] res = new int[n];
-        int[] cnt = new int[n + 1];
+    public int[] findThePrefixCommonArray(int[] A, int[] B) {
+        int[] ans = new int[A.length];
+        int[] freq = new int[A.length + 1];
         int common = 0;
 
-        for (int i = 0; i < n; ++i) {
-            if (++cnt[a[i]] == 2) common++;
-            if (++cnt[b[i]] == 2) common++;
-            res[i] = common;
+        for(int i = 0; i < A.length; ++i){
+            freq[A[i]]++;
+            if(freq[A[i]] == 2){
+                common++;
+            }
+            freq[B[i]]++;
+            if(freq[B[i]] == 2){
+                common++;
+            }
+            ans[i] = common;
         }
-
-        return res;
+        return ans;
     }
 }
