@@ -48,7 +48,6 @@ class Solution {
         boolean[] low = new boolean[26];
         boolean[] up = new boolean[26];
 
-        // Traverse the word and mark corresponding lowercase and uppercase characters
         for (int i = 0; i < word.length(); ++i) {
             char c = word.charAt(i);
             if (Character.isLowerCase(c)) {
@@ -58,7 +57,6 @@ class Solution {
             }
         }
 
-        // Count matching pairs of lowercase and uppercase characters
         int res = 0;
         for (int i = 0; i < 26; ++i) {
             if (low[i] && up[i]) {
