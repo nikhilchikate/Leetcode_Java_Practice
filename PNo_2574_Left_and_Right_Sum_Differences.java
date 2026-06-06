@@ -33,21 +33,15 @@ Constraints:
 
 class Solution {
     public int[] leftRightDifference(int[] nums) {
-        int left = 0;
-        int right = 0;
-        int n = nums.length;
-
-        // Compute the total sum (right sum) in one pass
-        for (int num : nums) {
-            right += num;
+        int leftSum = 0, rightSum = 0, n = nums.length;
+        for (int num : nums)
+            rightSum += num;
+        for (int i = 0; i < n; i++) {
+            int val = nums[i];
+            rightSum -= val;
+            nums[i] = Math.abs(leftSum - rightSum);
+            leftSum += val;
         }
-
-        int[] ans = new int[n];
-        for (int i = 0; i < n; ++i) {
-            right -= nums[i]; // Update right sum by subtracting the current element
-            ans[i] = Math.abs(left - right);
-            left += nums[i]; // Update left sum by adding the current element
-        }
-        return ans;
+        return nums;
     }
 }
