@@ -43,6 +43,7 @@ class Solution {
         int cnt = 0;
         int j = 0;
         int k = 0;
+
         for (int i = 0; i < len; i++) {
             if (nums[i] < piv) {
                 les[j++] = nums[i];
@@ -52,16 +53,21 @@ class Solution {
                 hig[k++] = nums[i];
             }
         }
+
         int idx = 0;
+
         for (int a = 0; a < j; a++) {
             res[idx++] = les[a];
         }
+
         for (int a = 0; a < cnt; a++) {
             res[idx++] = piv;
         }
+
         for (int a = 0; a < k; a++) {
             res[idx++] = hig[a];
         }
+        
         return res;
     }
 }
