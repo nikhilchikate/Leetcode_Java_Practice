@@ -20,7 +20,6 @@ Example 3:
 Input: s = "abc"
 Output: 1
 
-
 Constraints:
 
 3 <= s.length <= 5 x 10^4
