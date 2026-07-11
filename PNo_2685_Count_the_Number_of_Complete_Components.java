@@ -35,6 +35,7 @@ ai != bi
 There are no repeated edges.
 */
 
+
 class UnionFind {
     private int[] id;
     private int[] rank;
