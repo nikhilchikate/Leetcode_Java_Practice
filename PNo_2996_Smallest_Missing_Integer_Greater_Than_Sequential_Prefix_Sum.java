@@ -25,6 +25,7 @@ Constraints:
 1 <= nums[i] <= 50
 */
 
+
 class Solution {
     public int missingInteger(int[] nums) {
         int currentSum = nums[0], result = 0;
