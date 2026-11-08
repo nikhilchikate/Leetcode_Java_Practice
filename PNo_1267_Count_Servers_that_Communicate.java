@@ -6,8 +6,6 @@ Return the number of servers that communicate with any other server.
 
 Example 1:
 
-
-
 Input: grid = [[1,0],[0,1]]
 Output: 0
 Explanation: No servers can communicate with others.
