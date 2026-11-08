@@ -4,7 +4,6 @@ You are given a map of a server center, represented as a m * n integer matrix gr
 Return the number of servers that communicate with any other server.
 
 
-
 Example 1:
 
 
