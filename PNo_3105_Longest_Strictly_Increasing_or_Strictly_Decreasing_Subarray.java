@@ -59,6 +59,7 @@ Constraints:
 1 <= nums[i] <= 50
 */
 
+
 class Solution {
     public int longestMonotonicSubarray(int[] nums) {
         int res = 1, inc = 1, dec = 1;
