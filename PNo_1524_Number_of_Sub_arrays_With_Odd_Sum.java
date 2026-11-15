@@ -31,6 +31,7 @@ Constraints:
 1 <= arr[i] <= 100
 */
 
+
 class Solution {
     public int numOfSubarrays(int[] arr) {
         long prefixSum = 0;
