@@ -41,23 +41,18 @@ s[i] is either '0' or '1'.
 
 class Solution {
     public int minChanges(String s) {
-        int changes = 0; // To count the required changes
-        int sum = 0; // To accumulate the sum of the digits in each pair
+        int changes = 0;
+        int sum = 0;
 
         for (int i = 0; i < s.length(); i++) {
-            // Add the current digit to the sum (0 or 1)
             sum += s.charAt(i) - '0';
 
-            // If we are at an odd index (0-based)
             if (i % 2 == 1) {
-                // Add 1 to changes if the sum is odd, to make it even
                 changes += (sum % 2);
-                // Reset sum for the next pair
                 sum = 0;
             }
         }
 
-        // Return the number of changes needed
         return changes;
     }
 }
