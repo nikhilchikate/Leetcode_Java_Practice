@@ -45,26 +45,33 @@ Follow-up: Can you implement both GetProduct and Add to work in O(1) time comple
 */
 
 class ProductOfNumbers {
-    ArrayList<Integer>listInt=new ArrayList<>();
-    int prod=1;
+    private int[] list;
+    private int size;
 
     public ProductOfNumbers() {
+        list = new int[16];
+        list[0] = 1;
+        size = 1;
     }
 
     public void add(int num) {
-        if(num==0){
-            listInt=new ArrayList<>();
-            prod=1;
-            return;
+        if (num == 0) {
+            size = 1;
+            list[0] = 1;
+        } else {
+            if (size == list.length) {
+                list = Arrays.copyOf(list, size * 2);
+            }
+            list[size] = list[size - 1] * num;
+            size++;
         }
-        prod=prod*num;
-        listInt.add(prod);
+
     }
 
     public int getProduct(int k) {
-        if(listInt.size()<k)return 0;
-        int res=listInt.get(listInt.size()-1);
-        if(listInt.size()==k)return res;
-        return res/listInt.get(listInt.size()-1-k);
+        if (k >= size) {
+            return 0;
+        }
+        return list[size - 1] / list[size - 1 - k];
     }
 }
